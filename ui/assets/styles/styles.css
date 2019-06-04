@@ -70,16 +70,10 @@ a{
     grid-template-columns: 1fr 1fr;
     background: rgba(139, 139, 139, 0.8);
 }
-.sign-in-right{
-
-}
 .sign-in-right > .logo{
     margin-top: 72px;
     margin-left: 72px;
     position: fixed;
-}
-.sign-in-left{
-
 }
 .sign-in-form-container{
     width: 250px;
