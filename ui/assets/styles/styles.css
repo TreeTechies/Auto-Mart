@@ -1,0 +1,156 @@
+html,body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.title{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 48px;
+    letter-spacing: -0.06em;
+    color: #000000;
+}
+.button{
+    margin: 16px 0px;
+    padding: 11px;
+    border: none;
+    color: #000000;
+    background-color: #E5E5E5;
+    display: block;
+    text-align: center;
+}
+.button:focus{
+    outline: none;
+}
+.button:hover{
+    cursor: pointer;
+    color: white;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+}
+a{
+    text-decoration: none;
+}
+.v-space-32{
+    padding: 16px 0px;
+}
+.v-space-16{
+    padding: 8px 0px;
+}
+
+.active{
+    background-color: #000000;
+    color: white !important;
+}
+.fixed{
+    position: fixed;
+}
+.stick{
+    position:-webkit-sticky;
+    position:sticky;
+}
+.center{
+    text-align: center;
+}
+
+.p-b{
+    padding-bottom: 16px;
+}
+.p-b-8{
+    padding-bottom: 8px;
+}
+
+
+
+/****************** Sign in page ******************/
+.sign-in-page{
+    bottom: 0;
+    min-height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: rgba(139, 139, 139, 0.8);
+}
+.sign-in-right{
+
+}
+.sign-in-right > .logo{
+    margin-top: 72px;
+    margin-left: 72px;
+    position: fixed;
+}
+.sign-in-left{
+
+}
+.sign-in-form-container{
+    width: 250px;
+    margin-top: 72px;
+    padding: 32px;
+    background-color: #C4C4C4;
+}
+.sign-in-form-container > form {
+    width: 250px;
+}
+.sign-in-form-container > form > .input-field{
+    padding-top: 16px;
+    display: grid;
+    grid-template-rows: auto auto;
+}
+.sign-in-form-container > form > .input-field > .input-text {
+    margin: 8px 0px;
+    width: 218px;
+    padding: 0px 16px;
+    line-height: 38px;
+    border: none;
+    background-color: #E5E5E5;
+}
+.sign-in-form-container > form > .input-field > .input-text:focus {
+    outline: none;
+}
+.forgot-password{
+    font-size: 14px;
+    color: white;
+}
+.forgot-password:hover{
+    color: #000000;
+}
+.label{
+    color: #000000;
+}
+.create-new-account{
+    font-size: 14px;
+    color: #000000;
+}
+.create-new-account:hover{
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Media queries */
+@media screen and (max-width: 760px) {
+    /****************** Sign in page ******************/
+    .sign-in-page{
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding: 72px 0px;
+    }
+
+    .sign-in-right > .logo{
+        margin-top: 0;
+        margin-left: 0;
+        position: initial;
+    }
+}
