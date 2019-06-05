@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Auto Mart</title>
-
-    <link rel="stylesheet" href="../assets/styles/styles.css">
+    <title>Auto Mart | Ads</title>
 </head>
 <body>
     <section class="home-page">
+        <!-- Header -->
         <section class="app-bar">
             <div class="logo">
                 <img src="../assets/images/logo.png" alt="Logo">
@@ -48,82 +47,39 @@
                     <a href="./profile.html">Profile</a>
                     <a href="./myorders.html">Orders</a>
                     <a href="./myads.html">My Ads</a>
-                    <a href="./admin.html">As Admin</a>
+                    <a class="active" href="./admin.html">As Admin</a>
                 </div>
             </div>
         </section>
+
         <div class="v-space-32"></div>
-        <div class="c-title">Available cars</div>
+        <div class="c-title stick">Cars</div>
         <div class="v-space-16"></div>
-        <section class="car-items">
-            <div class="item">
-                <a href="#open-modal">
-                    <img src="../assets/images/car-1.png" alt="" srcset="">
-                </a>
-                <div class="caption">
-                    <div class="price">35,000 USD</div>
-                    <div class="maker">Manufacturer</div>
-                    <div class="state">New car</div>
-                    <div class="buy">Buy</div>
-                </div>
+
+        <!--  -->
+        <section class="b-content">
+            <div class="left-nav">
+                <a class="active" href="./myads.html">All</a>
+                <a class="" href="./cars_sold.html">Sold</a>
+                <a class="" href="./cars_unsold.html">Unsold</a>
             </div>
-            <div class="item">
-                <a href="#open-modal">
-                    <img src="../assets/images/car-1.png" alt="" srcset="">
-                </a>
-                <div class="caption">
-                    <div class="price">35,000 USD</div>
-                    <div class="maker">Manufacturer</div>
-                    <div class="state">New car</div>
-                    <div class="buy">Buy</div>
-                </div>
-            </div>
-            <div class="item">
-                <a href="#open-modal">
+            <section class="car-items">
+                <div class="item">
+                    <a href="#open-modal">
                         <img src="../assets/images/car-1.png" alt="" srcset="">
-                </a>
-                <div class="caption">
-                    <div class="price">35,000 USD</div>
-                    <div class="maker">Manufacturer</div>
-                    <div class="state">New car</div>
-                    <div class="buy">Buy</div>
+                    </a>
+                    <div class="caption">
+                        <div class="price">35,000 USD</div>
+                        <div class="maker">Manufacturer</div>
+                        <div class="state">New car</div>
+                        <a href="./edit.html" class="edit">Edit</a>
+                    </div>
                 </div>
-            </div>
-            <div class="item">
-                <a href="#open-modal">
-                        <img src="../assets/images/car-1.png" alt="" srcset="">
-                </a>
-                <div class="caption">
-                    <div class="price">35,000 USD</div>
-                    <div class="maker">Manufacturer</div>
-                    <div class="state">New car</div>
-                    <div class="buy">Buy</div>
-                </div>
-            </div>
-            <div class="item">
-                <a href="#open-modal">
-                    <img src="../assets/images/car-1.png" alt="" srcset="">
-                </a>
-                <div class="caption">
-                    <div class="price">35,000 USD</div>
-                    <div class="maker">Manufacturer</div>
-                    <div class="state">New car</div>
-                    <div class="buy">Buy</div>
-                </div>
-            </div>
-            <div class="item">
-                <a href="#open-modal">
-                        <img src="../assets/images/car-1.png" alt="" srcset="">
-                </a>
-                <div class="caption">
-                    <div class="price">35,000 USD</div>
-                    <div class="maker">Manufacturer</div>
-                    <div class="state">New car</div>
-                    <div class="buy">Buy</div>
-                </div>
-            </div>
+            </section>
         </section>
     </section>
+
+    <!-- Modal -->
     <div id="open-modal" class="modal">
         <div>
             <a href="#close-modal" title="Close" class="close-modal">&times;</a>
@@ -152,8 +108,8 @@
                 <div class="state">New car</div>
                 <div class="m-maker">Truck</div>
                 <div class="buttons">
-                    <input class="button" type="button" value="Report">
-                    <input class="button" type="button" value="Buy">
+                    <div></div>
+                    <input class="button" type="button" value="Edit">
                 </div>
             </div>
         </div>

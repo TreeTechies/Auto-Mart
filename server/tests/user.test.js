@@ -2,7 +2,7 @@ const assert = require('assert');
 const request = require('supertest');
 const { User, Users } = require('../models/user.model');
 
-describe('/signup', () => {
+describe('User', () => {
     let server;
     
     beforeEach(() => {
