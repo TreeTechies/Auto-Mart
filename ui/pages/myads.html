@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Auto Mart | Ads</title>
+
+    <link rel="stylesheet" href="../assets/styles/styles.css">
+</head>
+
+<body>
+    <section class="home-page">
+        <!-- Header -->
+        <section class="app-bar">
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="Logo">
+            </div>
+            <div class="fliter">
+                <div class="mn">
+                    <div class="m-label">Manufacturer</div>
+                    <select name="manufacturer" id="manufacturer">
+                        <option value="all">All</option>
+                        <option value="b">Mazda LaPuta</option>
+                        <option value="c">Mitsubishi</option>
+                        <option value="d">Toyota</option>
+                    </select>
+                </div>
+                <div class="mn">
+                    <div class="m-label">Car state</div>
+                    <select name="car_state" id="car_state">
+                        <option value="all">All</option>
+                        <option value="new">New</option>
+                        <option value="used">Used</option>
+                    </select>
+                </div>
+                <div class="mn">
+                    <div class="m-label">Price range (USD)</div>
+                    <div class="p-input">
+                        <input type="number" name="" id="" placeholder="Min price">
+                        <input type="number" name="" id="" placeholder="Max price">
+                    </div>
+                </div>
+            </div>
+            <div class="user-avator-btn">
+                <div class="u-a-btn">
+                    <div class="user-avator"></div>
+                </div>
+                <div class="menu-content">
+                    <a href="./profile.html">Profile</a>
+                    <a href="./myorders.html">Orders</a>
+                    <a class="active" href="./myads.html">My Ads</a>
+                    <a href="./admin.html">As Admin</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="v-space-32"></div>
+        <div class="sub-header ">
+            <div class="c-title stick">My cars</div>
+            <div class="floot-rigt">
+                <a href="./post_new.html" class="post-new">Post new car</a>
+            </div>
+        </div>
+        <div class="v-space-16"></div>
+
+        <!--  -->
+        <section class="b-content">
+            <div class="left-nav">
+                <a class="active" href="./myads.html">All</a>
+                <a class="" href="./cars_sold.html">Sold</a>
+                <a class="" href="./cars_unsold.html">Unsold</a>
+            </div>
+            <section class="car-items">
+                <div class="item">
+                    <a href="#open-modal">
+                        <img src="../assets/images/car-1.png" alt="" srcset="">
+                    </a>
+                    <div class="caption">
+                        <div class="price">35,000 USD</div>
+                        <div class="maker">Manufacturer</div>
+                        <div class="state">New car</div>
+                        <a href="./edit.html" class="edit">Edit</a>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+
+    <!-- Modal -->
+    <div id="open-modal" class="modal">
+        <div>
+            <a href="#close-modal" title="Close" class="close-modal">&times;</a>
+            <div class="car-images-slider-container">
+                <div class="car-slide fade">
+                    <div class="numbertext">1 / 3</div>
+                    <img src="../assets/images/car-1.png">
+                </div>
+
+                <div class="car-slide fade">
+                    <div class="numbertext">2 / 3</div>
+                    <img src="../assets/images/car-1.png">
+                </div>
+
+                <div class="car-slide fade">
+                    <div class="numbertext">3 / 3</div>
+                    <img src="../assets/images/car-1.png">
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <div class="car-desc">
+                <div class="price v-space-16">35,000 USD</div>
+                <div class="m-maker">Manufacturer</div>
+                <div class="state">New car</div>
+                <div class="m-maker">Truck</div>
+                <div class="buttons">
+                    <div></div>
+                    <input class="button" type="button" value="Edit">
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="../assets/scripts/scripts.js"></script>
+</body>
+
+</html>
