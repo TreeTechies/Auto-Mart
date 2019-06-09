@@ -11,9 +11,7 @@ class User{
 }
 
 //  Array of Users
-let users = [
-    new User(1, 'nsengimanavedadom@gmail.com', 'Nsengimana', 'Veda Dominique', 'Veda123.', 'Gikondo', false)
-];
+let usersData = [];
 
 module.exports.User = User;
-module.exports.Users = users;
+module.exports.usersData = usersData;
