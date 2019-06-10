@@ -1,6 +1,6 @@
 const assert = require('assert');
 const request = require('supertest');
-const { User, Users } = require('../models/user.model');
+const { usersData } = require('../models/user.model');
 
 describe('User', () => {
     let server;
@@ -24,7 +24,7 @@ describe('User', () => {
     });
 
     it('users should be 2', () => {
-        assert(Users.length, 2);
+        assert(usersData.length, 1);
     });
 
     /* it('it should return token if user is sucessfull authenicated', async () => {

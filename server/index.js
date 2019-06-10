@@ -2,7 +2,7 @@
 const express = require('express');
 //  Import Routes
 const user_route = require('./routes/user.route');
-const car_route = require('./routes/cars.route');
+const car_route = require('./routes/car.route');
 
 const app = express();
 const PORT = process.env.PORT || 3000;

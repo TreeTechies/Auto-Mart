@@ -4,6 +4,7 @@
   "description": "Auto Mart is an online marketplace for automobiles of diverse makes, model or body type. With Auto Mart, users can sell their cars or buy from trusted dealerships or private sellers.",
   "main": "server/index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "build": "babel src -d lib",
     "test": "mocha 'server/tests/**/*.js' --timeout 10000"
   },
@@ -13,6 +14,10 @@
   },
   "author": "Nsengimana Veda Dominique",
   "license": "MIT",
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.4.1"
+  },
   "bugs": {
     "url": "https://github.com/TreeTechies/Auto-Mart/issues"
   },
@@ -20,6 +25,9 @@
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
     "mocha": "^6.1.4"
   },
   "dependencies": {
@@ -27,6 +35,7 @@
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "nodemon": "^1.19.1",
     "supertest": "^4.0.2"
   }
 }
