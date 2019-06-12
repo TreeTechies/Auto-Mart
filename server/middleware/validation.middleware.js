@@ -4,7 +4,6 @@ const Joi = require('@hapi/joi'); //  Import Joi for Validations
 //  Register validation
 function registerValidation(data) {
     const userSchema = {
-        id:         Joi.number().required(),
         email:      Joi.string().required().email(),
         first_name: Joi.string().required(),
         last_name:  Joi.string().required(),
