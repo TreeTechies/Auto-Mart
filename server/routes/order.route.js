@@ -1,12 +1,8 @@
 //  Module Imports
 const router = require('express').Router();
 const verify = require('../middleware/verify_token.middleware');
-const { getAll, markCarAsSold, postCar, updatePost, viewCar } = require('../controllers/car.controller');
+const { makeOrder } = require('../controllers/order.controller');
 
-router.get('/', verify, getAll);
-router.post('/postCar', verify, postCar);
-router.patch('/updatePost/:id', verify, updatePost);
-router.patch('/markCarAsSold/:id', verify, markCarAsSold);
-router.get('/viewCar/:id', viewCar);
+router.post('/', verify, makeOrder);
 
 module.exports = router;
