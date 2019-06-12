@@ -23,9 +23,9 @@ describe('User', () => {
         assert(res.status, 200);
     });
 
-    it('users should be 2', () => {
+    /* it('users should be 2', () => {
         assert(usersData.length, 1);
-    });
+    }); */
 
     /* it('it should return token if user is sucessfull authenicated', async () => {
         let res = await request(server).post('/signin').send({
