@@ -1,6 +1,7 @@
 const uuid = require('uuid/v1');
 
-const { carsData } = require('../models/car.model'); //  Import User Model and Data
+const { carsData } = require('../models/car.model');
+const { usersData } = require('../models/user.model');
 
 getAll = (req, res) => {
     var availableCars = carsData.filter((c) => c.status === "available");
@@ -53,12 +54,26 @@ getAll = (req, res) => {
 };
 
 postCar = (req, res) => {
+    
+    var user_email = req.user.email
+    
+    //  Get user
+    const user = usersData.find(u => u.email == user_email);
+
+    if (!user) {
+        res.status(401).send({
+            'status': 401,
+            'message': 'You don\'t have an account in our system, please create one.' 
+        });
+        return;
+    }
+
     var car = {
         'id' : uuid(),
-        'owner' : req.body.owner,
+        'owner' : user.id,
         'created_on' : Date.now(),
         'state' : req.body.state,
-        'status' : req.body.status,
+        'status' : 'available',
         'price' : req.body.price,
         'manufacturer' : req.body.manufacturer,
         'model' : req.body.model,
@@ -67,11 +82,11 @@ postCar = (req, res) => {
 
     carsData.push(car);
 
-    res.send({
+    res.status(200).send({
         'status': 200,
         'message': 'Car post sucessfuly added',
         'data': carsData[carsData.length -1]
-    })
+    });
 };
 
 updatePost = (req, res) => {

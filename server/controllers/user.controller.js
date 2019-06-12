@@ -21,7 +21,7 @@ signIn = async (req, res) => {
         const validPassword = await bcrypt.compare(userData.password, user.password);
         if (!validPassword) return res.send('Password is not correct.');
         //  Token
-        const token = jwt.sign({_id: user._id}, 'secret_key');
+        const token = jwt.sign({email: user.email}, 'secret_key');
         res.header('authtoken', token).send({
             'status': 200,
             'message': 'User sign in is sucessfuly!',
