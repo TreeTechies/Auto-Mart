@@ -2,8 +2,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User, usersData } = require('../models/user.model'); //  Import User Model and Data
 const { registerValidation, loginValidation } = require('../middleware/validation.middleware'); //  Import Validations
+const uuid = require('uuid/v1');
 
-const secret_key = process.env.secret_key;
 
 signIn = async (req, res) => {
     //  Validate
@@ -43,7 +43,7 @@ signUp = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     const user = new User(
-        req.body.id,
+        uuid(),
         req.body.email,
         req.body.first_name,
         req.body.last_name,
@@ -59,13 +59,5 @@ signUp = async (req, res) => {
     });
 };
 
-getAll = (req, res) => {
-    res.send({
-        'status': req.status,
-        'data': usersData
-    });
-};
-
 module.exports.signIn = signIn;
 module.exports.signUp = signUp;
-module.exports.getAll = getAll;
