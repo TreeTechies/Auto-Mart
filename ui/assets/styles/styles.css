@@ -6,12 +6,12 @@ html,body{
 .title{
     font-style: normal;
     font-weight: normal;
-    font-size: 48px;
+    font-size: 36px;
     letter-spacing: -0.06em;
     color: #000000;
 }
 .button{
-    margin: 16px 0px;
+    margin: 8px 0px;
     padding: 11px;
     border: none;
     color: #000000;
@@ -91,6 +91,12 @@ a{
     color: #C4C4C4;
 }
 
+.page{
+    background-image: url('../images/bg-car.jpg');
+    background-size: cover;
+}
+
+
 
 /****************** Sign in page ******************/
 .sign-in-page{
@@ -98,25 +104,29 @@ a{
     min-height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    background: rgba(139, 139, 139, 0.8);
+    grid-template-columns: 1fr 1.6fr;
+    background: rgba(27, 27, 27, 0.651);
+}
+.sign-in-left{
+    display: grid;
+    align-content: center;
 }
 .sign-in-right > .logo{
+    width: 120px;
     margin-top: 72px;
     margin-left: 72px;
     position: fixed;
 }
 .sign-in-form-container{
     width: 250px;
-    margin: 72px 0px;
-    padding: 32px;
+    padding: 16px 32px;
     background-color: #C4C4C4;
 }
 .sign-in-form-container > form {
     width: 250px;
 }
 .sign-in-form-container > form > .input-field{
-    padding-top: 16px;
+    padding-top: 8px;
     display: grid;
     grid-template-rows: auto auto;
 }
