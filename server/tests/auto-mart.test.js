@@ -130,7 +130,7 @@ describe('Auto Mart', () => {
 
     describe('Admin', () => {
 
-        it('it should return 200 if user is sucessfull registered', () => {
+        it('it should ', () => {
 
         });
 
