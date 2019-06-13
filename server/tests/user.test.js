@@ -1,17 +1,16 @@
 const assert = require('assert');
-const request = require('supertest');
 const { usersData } = require('../models/user.model');
 
-describe('User', () => {
+describe('Auto Mart', () => {
     let server;
     
     beforeEach(() => {
         server = require('../index');
     });
 
-    it('it should return 200 if user is sucessfull registered', async () => {
-        let res = await request(server).post('/signup')
-        .send({
+    describe('Account', () => {
+
+        const user = {
             'id': 2,
             'email': 'nsengimana@gmail.com',
             'first_name': 'Nsengimana',
@@ -19,22 +18,85 @@ describe('User', () => {
             'password': 'Veda123.',
             'address': 'Gikondo',
             'is_admin': true
+        };
+
+        it('it should return 200 if user is sucessfull registered', () => {
+
         });
-        assert(res.status, 200);
+
+        it('it should return 200 if user is sucessfull logged in', () => {
+
+        });
+
+        it('it should return user token', () => {
+
+        });
+
+        it('it should return user email from token', () => {
+
+        });
     });
 
-    /* it('users should be 2', () => {
-        assert(usersData.length, 1);
-    }); */
+    describe('Cars', () => {
 
-    /* it('it should return token if user is sucessfull authenicated', async () => {
-        let res = await request(server).post('/signin').send({
+        const user = {
+            'id': 2,
             'email': 'nsengimana@gmail.com',
-            'password': 'Veda123.'
+            'first_name': 'Nsengimana',
+            'last_name': 'Dominique',
+            'password': 'Veda123.',
+            'address': 'Gikondo',
+            'is_admin': true
+        };
+
+        it('it should return 200 if user is sucessfull registered', () => {
+
         });
-        let isAuthenticated = res.body;
-        console.log(`is Authenticated: ${isAuthenticated}`);
-        console.log(`header: ${res.header('authtoken')}`);
-        assert(isAuthenticated, true);
-    }); */
+
+        it('it should return 200 if user is sucessfull logged in', () => {
+
+        });
+    });
+
+    describe('Order', () => {
+
+        const user = {
+            'id': 2,
+            'email': 'nsengimana@gmail.com',
+            'first_name': 'Nsengimana',
+            'last_name': 'Dominique',
+            'password': 'Veda123.',
+            'address': 'Gikondo',
+            'is_admin': true
+        };
+
+        it('it should return 200 if user is sucessfull registered', () => {
+
+        });
+
+        it('it should return 200 if user is sucessfull logged in', () => {
+
+        });
+    });
+
+    describe('Admin', () => {
+
+        const user = {
+            'id': 2,
+            'email': 'nsengimana@gmail.com',
+            'first_name': 'Nsengimana',
+            'last_name': 'Dominique',
+            'password': 'Veda123.',
+            'address': 'Gikondo',
+            'is_admin': true
+        };
+
+        it('it should return 200 if user is sucessfull registered', () => {
+
+        });
+
+        it('it should return 200 if user is sucessfull logged in', () => {
+
+        });
+    });
 });
