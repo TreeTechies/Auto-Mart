@@ -18,7 +18,7 @@ module.exports = function(req, res, next) {
         next(); // Let continue
     } catch (error) {
         res.status(400).send({
-            'status': 401,
+            'status': 400,
             'message': 'Invalid token!'
         });
     }
