@@ -32,7 +32,7 @@ signIn = async (req, res) => {
         return res.send(`Email(${userData.email}) doesn't exist!`);
     }
 };
-
+ 
 signUp = async (req, res) => {
     //  Validate
     const { error } = registerValidation(req.body);
