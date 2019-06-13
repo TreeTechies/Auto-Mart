@@ -14,9 +14,8 @@ signIn = async (req, res) => {
         'password': req.body.password
     };
     //  Check if user exist
-    const availableUsers = usersData.filter(u => u.email == userData.email);
-    if (availableUsers.length > 0) {
-        const user = availableUsers[0];
+    const user = usersData.find(u => u.email == userData.email);
+    if (user) {
         //  Is password correct?
         const validPassword = await bcrypt.compare(userData.password, user.password);
         if (!validPassword) return res.send('Password is not correct.');
@@ -25,7 +24,8 @@ signIn = async (req, res) => {
         res.header('authtoken', token).send({
             'status': 200,
             'message': 'User sign in is sucessfuly!',
-            'user_token': token
+            'user_token': token,
+            'data': user
         });
     }
     else{
@@ -43,7 +43,6 @@ signUp = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     const user = new User(
-        uuid(),
         req.body.email,
         req.body.first_name,
         req.body.last_name,
