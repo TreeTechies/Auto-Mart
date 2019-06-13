@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js",
+    "start": "node server/index.js",
     "test": "nyc mocha 'server/tests/' --exit",
     "coverage": "nyc --reporter=lcov npm run test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
