@@ -59,20 +59,12 @@ getAll = (req, res) => {
         }
 
         // Get all cars whose status is available
-        var availableCars = carsData.filter((c) => c.status === "available");
-
-        if (availableCars.length === 0) {
-            res.status(200).send({
-                'status' : 200,
-                'message' :  'No cars available.'        
-            });
-            return;
-        }
+        var cars = carsData.filter((c) => c.status === "available");
 
         res.status(200).send({
             'status' : 200,
-            'data' :  availableCars,
-            'message': 'All available cars'       
+            'data' :  cars,
+            'message': 'All available cars'    
         });
         
         return;

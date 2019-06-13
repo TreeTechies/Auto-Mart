@@ -86,7 +86,6 @@ describe('Auto Mart', () => {
         it('unsigned in users should be able to view list of available cars', () => {
             chai.request(server).get('/api/v1/cars').end((err, res) => {
               res.should.have.status(200);
-              console.log(res.body.message)
               expect(res.body.message).to.be.equal('All available cars');
             })
         });
@@ -130,8 +129,15 @@ describe('Auto Mart', () => {
 
     describe('Admin', () => {
 
-        it('it should return 200 if user is sucessfull registered', () => {
-
+        it('it should return all cars when user is admin', () => {
+            chai.request(server).get('/api/v1/cars')
+            .set('content-type', 'application/json')
+            .set('auth-token', token)
+            .end((err, res) => {
+                res.should.have.status(200);
+                expect(res.body.message).to.be.equal('All cars sold and unsold');
+                expect(res.body.data[0].body_type).to.be.equal('BB');
+            })
         });
 
         it('it should return 200 if user is sucessfull logged in', () => {
