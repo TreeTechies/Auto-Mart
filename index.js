@@ -6,7 +6,6 @@ const car_route = require('./routes/car.route');
 const order_route = require('./routes/order.route');
 
 const app = express();
-
 const PORT = process.env.PORT || 3000;
 
 
