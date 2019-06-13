@@ -1,7 +1,7 @@
 const uuid = require('uuid/v1');
 const jwt = require('jsonwebtoken');
 
-const { carsData } = require('../models/car.model');
+const { Car, carsData } = require('../models/car.model');
 const { usersData } = require('../models/user.model');
 
 getAll = (req, res) => {
@@ -71,7 +71,8 @@ getAll = (req, res) => {
 
         res.status(200).send({
             'status' : 200,
-            'data' :  availableCars        
+            'data' :  availableCars,
+            'message': 'All available cars'       
         });
         
         return;
@@ -93,17 +94,14 @@ postCar = (req, res) => {
         return;
     }
 
-    var car = {
-        'id' : uuid(),
-        'owner' : user.id,
-        'created_on' : Date.now(),
-        'state' : req.body.state,
-        'status' : 'available',
-        'price' : req.body.price,
-        'manufacturer' : req.body.manufacturer,
-        'model' : req.body.model,
-        'body_type' : req.body.body_type,
-    }
+    var car = new Car(
+        user.id,
+        req.body.state,
+        req.body.price,
+        req.body.manufacturer,
+        req.body.model,
+        req.body.body_type
+    );
 
     carsData.push(car);
 
@@ -131,9 +129,11 @@ updatePost = (req, res) => {
 
 viewCar = (req, res) => {
     var id = req.params.id;
+    var car = carsData.find((c) => c.id === id);
     res.status(200).send({
         'status': 200,
-        'data': carsData.find((c) => c.id === id)
+        'data': car,
+        'message': car != undefined ? `Car with id of ${car.id}` : `No car with a provided id of ${car.id}`
     });
 };
 

@@ -1,13 +1,16 @@
+const uuid = require('uuid/v1');
+
 class Car {
-    constructor(id, owner, created_on, state, status, price, manufacturer, model) {
-        this.id = id;
+    constructor(owner, state, price, manufacturer, model, body_type) {
+        this.id = uuid();
         this.owner = owner;
-        this.created_on = created_on;
+        this.created_on = Date.now();
         this.state = state;
-        this.status = status;
+        this.status = 'available';
         this.price = price;
         this.manufacturer = manufacturer;
         this.model = model;
+        this.body_type = body_type;
     }
 }
 
