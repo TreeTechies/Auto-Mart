@@ -6,7 +6,7 @@ class Car {
         this.owner = owner;
         this.created_on = Date.now();
         this.state = state;
-        this.status = 'sold';
+        this.status = 'available';
         this.price = price;
         this.manufacturer = manufacturer;
         this.model = model;
