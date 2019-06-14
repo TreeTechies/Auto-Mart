@@ -32,14 +32,14 @@ describe('Auto Mart', () => {
     describe('Account', () => {
 
         it('it should return 200 if user is sucessfull registered', (done) => {
-            chai.request(server).post('/api/v1/users/signup').send(signup_data).end((err, res) => {
+            chai.request(server).post('/api/v1/auth/signup').send(signup_data).end((err, res) => {
                 res.should.have.status(200);
                 done();
             });
         });
 
         it('it should return 200 and token if user is sucessfull logged in', (done) => {
-            chai.request(server).post('/api/v1/users/signin').send(signin_data).end((err, res) => {
+            chai.request(server).post('/api/v1/auth/signin').send(signin_data).end((err, res) => {
                 res.should.have.status(200);
                                 
                 res.body.should.have.property('user_token'); 
@@ -70,7 +70,7 @@ describe('Auto Mart', () => {
                 'body_type': 'B'
             };
 
-            chai.request(server).post('/api/v1/cars/postCar')
+            chai.request(server).post('/api/v1/car')
             .set('content-type', 'application/json')
             .set('auth-token', token)
             .send(new_car)
@@ -84,14 +84,14 @@ describe('Auto Mart', () => {
         });
 
         it('unsigned in users should be able to view list of available cars', () => {
-            chai.request(server).get('/api/v1/cars').end((err, res) => {
+            chai.request(server).get('/api/v1/car').end((err, res) => {
               res.should.have.status(200);
               expect(res.body.message).to.be.equal('All available cars');
             })
         });
 
         it('it should return a specific car by id', () => {
-            chai.request(server).get(`/api/v1/cars/${car.id}`).end((err, res) => {
+            chai.request(server).get(`/api/v1/car/${car.id}`).end((err, res) => {
               res.should.have.status(200);
               expect(res.body.data.id).to.be.equal(car.id);
             })
@@ -114,7 +114,7 @@ describe('Auto Mart', () => {
         });
 
         it('update car status', () => {
-            chai.request(server).patch(`/api/v1/cars/markCarAsSold/${car.id}`)
+            chai.request(server).patch(`/api/v1/car/${car.id}/status`)
             .set('content-type', 'application/json')
             .set('auth-token', token)
             .send({"status": "sold"})
@@ -130,7 +130,7 @@ describe('Auto Mart', () => {
     describe('Admin', () => {
 
         it('it should return all cars when user is admin', () => {
-            chai.request(server).get('/api/v1/cars')
+            chai.request(server).get('/api/v1/car')
             .set('content-type', 'application/json')
             .set('auth-token', token)
             .end((err, res) => {

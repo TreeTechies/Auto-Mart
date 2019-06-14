@@ -4,8 +4,9 @@
   "description": "Auto Mart is an online marketplace for automobiles of diverse makes, model or body type. With Auto Mart, users can sell their cars or buy from trusted dealerships or private sellers.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "nyc mocha 'tests/' --exit",
+    "prod": "node server/index.js",
+    "start": "nodemon server/index.js",
+    "test": "nyc mocha 'server/tests/' --exit",
     "coverage": "nyc --reporter=lcov npm run test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -25,23 +26,25 @@
   "homepage": "https://github.com/TreeTechies/Auto-Mart#readme",
   "devDependencies": {},
   "dependencies": {
-    "express": "^4.17.1",
-    "express-jwt": "^5.3.1",
-    "jsonwebtoken": "^8.5.1",
-    "uuid": "^3.3.2",
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
+    "@hapi/joi": "^15.0.3",
+    "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "coverage": "^0.4.0",
-    "mocha": "^6.1.4",
-    "@hapi/joi": "^15.0.3",
-    "bcryptjs": "^2.4.3",
     "coveralls": "^3.0.4",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^6.1.4",
     "nodemon": "^1.19.1",
-    "nyc": "^14.1.1"
+    "nyc": "^14.1.1",
+    "swagger-jsdoc": "^3.2.9",
+    "swagger-ui-express": "^4.0.6",
+    "uuid": "^3.3.2"
   }
 }

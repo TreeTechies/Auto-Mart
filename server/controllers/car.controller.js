@@ -148,8 +148,6 @@ deleteCar = (req, res) => {
     //  Get user role
     const is_admin = usersData.find(u => u.email == user_email).is_admin;
 
-    console.log('is admin =====> ' + is_admin);
-
     if (is_admin) {
         res.status(401).send({
             'status': 401,

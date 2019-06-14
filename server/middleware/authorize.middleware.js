@@ -1,5 +1,5 @@
 
-const verifyToken = require('../middleware/verify_token.middleware');
+const verifyToken = require('./verify_token.middleware');
 
 authorize = (roles = []) => {
     return [
