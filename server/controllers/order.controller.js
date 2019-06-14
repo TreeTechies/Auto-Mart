@@ -1,18 +1,10 @@
 const { carsData } = require('../models/car.model');
 const { Order, orders } = require('../models/order.model');
 const { usersData } = require('../models/user.model');
-const { makeOrderV } = require('../middleware/validation.middleware');
 
 makeOrder = (req, res) => {
     var car_id = req.body.id;
     var user_email = req.user.email;
-
-    //  Validate
-    const { error } = makeOrderV(user);
-
-    if (error) {
-        return res.status(400).send({'status' : 404,'error' : error.details[0].message});
-    }
 
     const car = carsData.find((c) => c.id === car_id);
 

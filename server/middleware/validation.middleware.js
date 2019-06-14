@@ -25,14 +25,6 @@ function loginValidation(data) {
     return Joi.validate(data, schema);
 }
 
-makeOrderV = (data) => {
-    const schema = {
-        email:      Joi.string().required().email()
-    };
-
-    return Joi.validate(data, schema);
-}
 
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
-module.exports.makeOrderV = makeOrderV;
