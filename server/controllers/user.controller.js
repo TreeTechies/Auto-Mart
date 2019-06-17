@@ -53,7 +53,27 @@ signUp = async (req, res) => {
         req.body.is_admin
     );
 
-    
+    db.createUserTable();
+    let result;
+
+    try {
+        await db.addUser(user);
+        
+        result = await db.selectById('users', user.id);
+
+    } catch (error) {
+        res.status(404).send({
+            'status': 404,
+            'message': error.error
+        });
+        return;
+    }
+
+    res.send({
+        'status': 200,
+        'message': 'User registered sucessfuly!',
+        'data': result.rows[0]
+    });
     return;
 };
 
