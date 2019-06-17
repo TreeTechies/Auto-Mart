@@ -12,6 +12,10 @@ class Car {
         this.model = model;
         this.body_type = body_type;
     }
+
+    static create() {
+        
+    }
 }
 
 let carsData = [
