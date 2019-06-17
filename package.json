@@ -6,6 +6,9 @@
   "scripts": {
     "prod": "node server/index.js",
     "start": "nodemon server/index.js",
+    "build": "babel src -d lib",
+    "prepublish": "npm run build",
+    "flow": "flow",
     "test": "nyc mocha 'server/tests/' --exit",
     "coverage": "nyc --reporter=lcov npm run test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
@@ -24,12 +27,15 @@
     "url": "https://github.com/TreeTechies/Auto-Mart/issues"
   },
   "homepage": "https://github.com/TreeTechies/Auto-Mart#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/preset-env": "^7.4.5",
+    "babel-cli": "^6.26.0",
+    "babel-preset-flow": "^6.23.0"
+  },
   "dependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
     "@hapi/joi": "^15.0.3",
     "bcryptjs": "^2.4.3",
