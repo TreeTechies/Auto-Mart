@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken');
 const { User, usersData } = require('../models/user.model'); //  Import User Model and Data
 const { registerValidation, loginValidation } = require('../middleware/validation.middleware'); //  Import Validations
 const uuid = require('uuid/v1');
+const { Database } = require('../db/auto_mart.db');
 
+const db = new Database();
 
 signIn = async (req, res) => {
     //  Validate
@@ -50,12 +52,31 @@ signUp = async (req, res) => {
         req.body.address,
         req.body.is_admin
     );
-    usersData.push(user);
+
+    //console.log(user);
+
+    db.createUserTable();
+    let result;
+
+    try {
+        await db.addUser(user);
+        
+        result = await db.selectById('users', user.id);
+
+    } catch (error) {
+        res.status(404).send({
+            'status': 404,
+            'message': error.error
+        });
+        return;
+    }
+
     res.send({
         'status': 200,
         'message': 'User registered sucessfuly!',
-        'user': usersData[usersData.length -1]
+        'data': result.rows[0]
     });
+    return;
 };
 
 module.exports.signIn = signIn;
