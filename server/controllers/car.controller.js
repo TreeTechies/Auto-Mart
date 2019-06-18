@@ -4,70 +4,52 @@ const { Database } = require('../helpers/db/auto_mart.db');
 
 const db = new Database();
 
-getAll = (req, res) => {
+getAll = async (req, res) => {
     var min_price = req.query.min;
     var max_price = req.query.max;
     
-    if (min_price || max_price) {
-        // Get all cars whose status is available
-        var availableCars = carsData.filter((c) => c.status === "available");
-        
-        if (min_price && max_price) {
-
-            var query_min_max = availableCars.filter((c) => c.price >= min_price && c.price <= max_price);
-
-            res.status(200).send({
-                'status' : 200,
-                'message': query_min_max.length > 0 ? `Cars with price range is between ${min_price} and ${max_price}` : `No cars withprice range is between ${min_price} and ${max_price}.`,
-                'data' :  query_min_max
-            });
-        }
-        else if (min_price) {
-            var query_min = availableCars.filter((c) => c.price >= min_price);
-
-            res.status(200).send({
-                'status' : 200,
-                'message': query_min.length > 0 ? `Cars with price range is above ${min_price}` : `No cars with price above ${min_price}.`,
-                'data' :  query_min
-            });
-        }
-        else if(max_price) {
-            var query_max = availableCars.filter((c) => c.price <= max_price);
-
-            res.status(200).send({
-                'status' : 200,
-                'message': query_max.length > 0 ? `Cars with price range is below ${max_price}` : `No cars with price below ${max_price}.`,
-                'data' :  query_max
-            });
-        }
-    } 
-    else {
-        const token = req.header('auth-token');
-
-        if (token) {
-            const verified = jwt.verify(token, 'secret_key'); // Verify provided user token if is still loged in
-            const is_admin = usersData.find(u => u.email == verified.email).is_admin;
-
-            if (is_admin) {
-                res.status(200).send({
-                    'status': 200,
-                    'message': 'All cars sold and unsold',
-                    'data': carsData
-                });
-                return;
-            }
-        }
-
-        // Get all cars whose status is available
-        var cars = carsData.filter((c) => c.status === "available");
-
+    if(min_price && max_price) {
+        var query_min_max = await db.selectCarByPriceRange(min_price, max_price);
         res.status(200).send({
             'status' : 200,
-            'data' :  cars,
-            'message': 'All available cars'    
+            'message': query_min_max.rows.length > 0 ? `Cars with price range is between ${min_price} and ${max_price}` : `No cars withprice range is between ${min_price} and ${max_price}.`,
+            'data' :  query_min_max.rows
         });
-        
-        return;
+    }
+    else if (min_price) {
+        var query_min_max = await db.selectCarByMinPrice(min_price);
+        res.status(200).send({
+            'status' : 200,
+            'message': query_min_max.rows.length > 0 ? `Cars with price range is above ${min_price}` : `No cars with price above ${min_price}.`,
+            'data' :  query_min_max.rows
+        });
+    }
+    else if(max_price) {
+        var query_min_max = await db.selectCarByMaxPrice(max_price);
+        res.status(200).send({
+            'status' : 200,
+            'message': query_min_max.rows.length > 0 ? `Cars with price range is below ${max_price}` : `No cars with price below ${max_price}.`,
+            'data' :  query_min_max.rows
+        });
+    }
+    else {
+        const token = req.header('auth-token');
+        if (token) {
+            const verified = jwt.verify(token, 'secret_key'); // Verify provided user token if is still loged in
+            const is_admin = await db.selectBy('users', 'email', verified.email);
+            if (is_admin.rows[0].isadmin) {
+                var carsResult = await db.selectAll('cars');
+                return res.status(200).send({ 'status': 200, 'message': 'All cars sold and unsold', 'data': carsResult.rows })
+            };
+        }
+        // Get all cars whose status is available
+        var carsResult = await db.selectBy('cars', 'status', 'available');
+        console.log(carsResult)
+        return res.status(200).send({
+            'status' : 200,
+            'data' :  carsResult.rows,
+            'message': 'Available cars'    
+        });
     }
 };
 

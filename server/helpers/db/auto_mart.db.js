@@ -14,10 +14,38 @@ class Database{
     await conn.end();
     return result;
   }
+  
+  async selectAll(table) {
+    const conn = this.dbConnection();
+    const result = await conn.query(`SELECT * FROM ${table};`);
+    await conn.end();
+    return result;
+  }
 
   async selectBy(table, column, value) {
     const conn = this.dbConnection();
     const result = await conn.query(`SELECT * FROM ${table} WHERE ${column}='${value}';`);
+    await conn.end();
+    return result;
+  }
+
+  async selectCarByPriceRange(value1, value2) {
+    const conn = this.dbConnection();
+    const result = await conn.query(`SELECT * FROM cars WHERE price >= ${value1} AND price <= ${value2};`);
+    await conn.end();
+    return result;
+  }
+
+  async selectCarByMinPrice(value1) {
+    const conn = this.dbConnection();
+    const result = await conn.query(`SELECT * FROM cars WHERE price >= ${value1};`);
+    await conn.end();
+    return result;
+  }
+
+  async selectCarByMaxPrice(value1) {
+    const conn = this.dbConnection();
+    const result = await conn.query(`SELECT * FROM cars WHERE price <= ${value1};`);
     await conn.end();
     return result;
   }
