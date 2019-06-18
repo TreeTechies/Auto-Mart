@@ -44,11 +44,10 @@ getAll = async (req, res) => {
         }
         // Get all cars whose status is available
         var carsResult = await db.selectBy('cars', 'status', 'available');
-        console.log(carsResult)
         return res.status(200).send({
             'status' : 200,
             'data' :  carsResult.rows,
-            'message': 'Available cars'    
+            'message': carsResult.rowCount > 0 ? 'Available cars' : 'No cars available.'   
         });
     }
 };
@@ -94,18 +93,20 @@ viewCar = async (req, res) => {
     });
 };
 
-markCarAsSold = (req, res) => {
+markCarAsSold = async (req, res) => {
     var id = req.params.id;
     var status = req.body.status;
     
-    var car_index = carsData.findIndex((c) => c.id === id);
-    carsData[car_index].status = status;
-
-    res.status(200).send({
-        'status': 200,
-        'message': 'Car status is updated sucessfuly.',
-        'data': carsData[car_index]
-    });
+    const user = await db.selectBy('users', 'email', req.user.email);
+    
+    const result = await db.updateCarStatus({'status': status, 'id': id, 'owner': user.rows[0].id});
+    
+    if (result.rowCount > 0) {
+        return res.status(200).send({ 'status': 200, 'message': 'Car status was updated sucessfuly.', 'data': result.rows });
+    }
+    else{
+        return res.status(200).send({ 'status': 200, 'message': 'Car id is not exist' });
+    }
 };
 
 deleteCar = (req, res) => {
