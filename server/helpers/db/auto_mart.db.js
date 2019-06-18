@@ -143,6 +143,14 @@ class Database{
     await conn.end();
     return result;
   }
+
+  async deleteCar(id){
+    const conn = this.dbConnection();
+    const result = await conn.query(`DELETE FROM cars WHERE id = '${id}';`);
+    await conn.end();
+    return result;
+  }
+  
 }
 
 module.exports.Database = Database;
