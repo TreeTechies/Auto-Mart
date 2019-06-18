@@ -70,17 +70,15 @@ postCar = async (req, res)  => {
 
 updatePost = (req, res) => {
     var id = req.params.id;
-    var new_price = req.body.price;
-    
+    var new_price = req.body.price
     var car_index = carsData.findIndex((c) => c.id === id);
     carsData[car_index].price = new_price;
 
     res.status(200).send({
         'status': 200,
-        'message': 'Car price is updated sucessfuly.',
+        'message': 'Car price was updated sucessfuly.',
         'data': carsData[car_index]
     });
-
 };
 
 viewCar = (req, res) => {

@@ -8,7 +8,7 @@ router.get('/car', validate, getAll);
 router.get('/car/:id', viewCar);
 router.delete('/car/:id', verify, deleteCar);
 router.post('/car', validate, verify, postCar);
-router.patch('/car/:id/price', verify, updatePost);
+router.patch('/car/:id/price', validate, verify, updatePost);
 router.patch('/car/:id/status', verify, markCarAsSold);
 
 module.exports = router;
