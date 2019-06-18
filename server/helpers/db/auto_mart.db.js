@@ -107,6 +107,13 @@ class Database{
 
     return result;
   }
+
+  async updateCarPrice(data){
+    const conn = this.dbConnection();
+    const result = await conn.query(`UPDATE cars SET price = '${data.price}' WHERE id = '${data.id}' AND owner = '${data.owner}' returning *;`);
+    await conn.end();
+    return result;
+  }
 }
 
 module.exports.Database = Database;

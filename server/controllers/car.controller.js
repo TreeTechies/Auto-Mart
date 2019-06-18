@@ -68,26 +68,29 @@ postCar = async (req, res)  => {
 
 };
 
-updatePost = (req, res) => {
+updatePost = async (req, res) => {
     var id = req.params.id;
-    var new_price = req.body.price
-    var car_index = carsData.findIndex((c) => c.id === id);
-    carsData[car_index].price = new_price;
-
-    res.status(200).send({
-        'status': 200,
-        'message': 'Car price was updated sucessfuly.',
-        'data': carsData[car_index]
-    });
+    var new_price = req.body.price;
+    
+    const user = await db.selectBy('users', 'email', req.user.email);
+    
+    const result = await db.updateCarPrice({'price': new_price, 'id': id, 'owner': user.rows[0].id});
+    
+    if (result.rowCount > 0) {
+        return res.status(200).send({ 'status': 200, 'message': 'Car price was updated sucessfuly.', 'data': result.rows });
+    }
+    else{
+        return res.status(200).send({ 'status': 200, 'message': 'Car id is not exist' });
+    }
 };
 
-viewCar = (req, res) => {
+viewCar = async (req, res) => {
     var id = req.params.id;
-    var car = carsData.find((c) => c.id === id);
+    const car = await db.selectBy('cars', 'id', id);
     res.status(200).send({
         'status': 200,
-        'data': car,
-        'message': car != undefined ? `Car with id of ${car.id}` : `No car with a provided id of ${car.id}`
+        'data': car.rows[0],
+        'message': car.rowCount != 0 ? `Car of ${car.rows[0].id}` : `No car with a provided id of ${car.rows[0].id}`
     });
 };
 
