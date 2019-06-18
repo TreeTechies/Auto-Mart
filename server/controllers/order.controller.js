@@ -2,6 +2,8 @@ const { carsData } = require('../models/car.model');
 const { Order, orders } = require('../models/order.model');
 const { usersData } = require('../models/user.model');
 
+const db = new Database();
+
 makeOrder = (req, res) => {
     var car_id = req.body.id;
     var user_email = req.user.email;
@@ -48,10 +50,17 @@ makeOrder = (req, res) => {
 updateOrder = (req, res) => {
     var price_offered = req.body.price_offered;
     var order_id = req.params.id;
-    var user_email = req.user.email;
-
-    //  Get user
-    const user = usersData.find(u => u.email == user_email);
+    //  Get user 
+    const user = await db.selectBy('users', 'email', req.user.email);
+    
+    const result = await db.updateCarPrice({'price': new_price, 'id': id, 'owner': user.rows[0].id});
+    
+    if (result.rowCount > 0) {
+        return res.status(200).send({ 'status': 200, 'message': 'Car price was updated sucessfuly.', 'data': result.rows });
+    }
+    else{
+        return res.status(200).send({ 'status': 200, 'message': 'Car id is not exist' });
+    }
 
     const order_index = orders.findIndex((o) => o.id === order_id);
 
