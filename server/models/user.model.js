@@ -12,8 +12,4 @@ class User{
     }
 }
 
-//  Array of Users
-let usersData = [];
-
 module.exports.User = User;
-module.exports.usersData = usersData;

@@ -28,3 +28,6 @@ SELECT TOP number|percent column_name(s) FROM table_name WHERE condition;
 /* Deleting table */
 DELETE TABLE table_name;
 
+/* If not exist */
+IF NOT EXISTS(SELECT 1 FROM Timesheet_Hours WHERE Staff_Id = @PersonID) BEGIN RAISERROR('Default list has not been loaded!', 16, 1 ROLLBACK TRAN END
+

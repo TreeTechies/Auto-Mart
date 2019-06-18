@@ -5,6 +5,7 @@ const user_route = require('./routes/user.route');
 const car_route = require('./routes/car.route');
 const order_route = require('./routes/order.route');
 const swagger = require('../swagger');
+const { Database } = require('./helpers/db/auto_mart.db');
 
 const app = express();
 
@@ -19,7 +20,10 @@ app.use('/api/v1/auth', user_route);
 app.use('/api/v1/car', car_route);
 app.use('/api/v1/order', order_route);
 
-const server = app.listen(PORT, ()=>{
+const db = new Database();
+db.createDb();
+
+const server = app.listen(PORT, () => {
     console.log(`running on port ${PORT}`)
 });
 
