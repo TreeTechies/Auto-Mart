@@ -110,7 +110,7 @@ markCarAsSold = async (req, res) => {
 };
 
 deleteCar = async (req, res) => {  
-    //  Get user role
+    //  Get user role 
     const user = await db.selectBy('users', 'email', req.user.email);
     if (user.rowCount == 0 || !user.rows[0].isadmin) {
         return res.status(401).send({ 'status': 401, 'message': 'Unauthorized request' });
