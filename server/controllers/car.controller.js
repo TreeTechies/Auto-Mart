@@ -1,8 +1,8 @@
-const uuid = require('uuid/v1');
 const jwt = require('jsonwebtoken');
+const { Car } = require('../models/car.model');
+const { Database } = require('../helpers/db/auto_mart.db');
 
-const { Car, carsData } = require('../models/car.model');
-const { usersData } = require('../models/user.model');
+const db = new Database();
 
 getAll = (req, res) => {
      
@@ -71,37 +71,19 @@ getAll = (req, res) => {
     }
 };
 
-postCar = (req, res) => {
-    
-    var user_email = req.user.email
-    
+postCar = async (req, res)  => {
+    var user_email = req.user.email;
     //  Get user
-    const user = usersData.find(u => u.email == user_email);
-
-    if (!user) {
-        res.status(401).send({
-            'status': 401,
-            'message': 'You don\'t have an account in our system, please create one.' 
-        });
-        return;
+    const result = await db.selectBy('users', 'email', user_email);
+    if (result.rowCount === 0) return res.status(401).send({ 'status': 401, 'message': 'You don\'t have an account in our system, please create one.' });
+    var car = new Car( result.rows[0].id, req.body.state, req.body.price, req.body.manufacturer, req.body.model, req.body.body_type);
+    try {
+        const insertedUser = await db.addCar(car);
+        return res.status(200).send({ 'status': 200, 'message': 'Car post sucessfuly added', 'data': insertedUser.rows[0] });
+    } catch (error) {
+        return res.status(401).send({ 'status': 401, 'message': 'Car is not saved' });
     }
 
-    var car = new Car(
-        user.id,
-        req.body.state,
-        req.body.price,
-        req.body.manufacturer,
-        req.body.model,
-        req.body.body_type
-    );
-
-    carsData.push(car);
-
-    res.status(200).send({
-        'status': 200,
-        'message': 'Car post sucessfuly added',
-        'data': carsData[carsData.length -1]
-    });
 };
 
 updatePost = (req, res) => {

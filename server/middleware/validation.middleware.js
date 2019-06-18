@@ -2,12 +2,12 @@
 const Joi = require('@hapi/joi');
 
 const signupSchema = {
-    email: Joi.string().required().email(),
+    email:      Joi.string().required().email(),
     first_name: Joi.string().required(),
-    last_name: Joi.string().required(),
-    password: Joi.string().min(6).required(),
-    address: Joi.string().required(),
-    is_admin: Joi.boolean().required(),
+    last_name:  Joi.string().required(),
+    password:   Joi.string().min(6).required(),
+    address:    Joi.string().required(),
+    is_admin:   Joi.boolean().required(),
 }
 
 const signinSchema = {
@@ -15,8 +15,17 @@ const signinSchema = {
     password:   Joi.string().min(6).required()
 };
 
+const postCarSchema = {
+    state:          Joi.string().required(),
+    price:          Joi.number().integer().required(),
+    manufacturer:   Joi.string().required(),
+    model:          Joi.string().required(),
+    body_type:      Joi.string().required()
+};
+
 // export the schemas
 module.exports = {
-    '/signup': signupSchema,
-    '/signin': signinSchema
+    '/auth/signup': signupSchema,
+    '/auth/signin': signinSchema,
+    '/car': postCarSchema,
 };

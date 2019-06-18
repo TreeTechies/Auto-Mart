@@ -34,7 +34,7 @@ class Database{
     await conn.query(`
       CREATE TABLE IF NOT EXISTS users( Id VARCHAR(255) PRIMARY KEY, FirstName VARCHAR(50) NOT NULL, LastName VARCHAR(50) NOT NULL, Email VARCHAR(50) UNIQUE NOT NULL, Password VARCHAR(255) NOT NULL, Address VARCHAR(50) NOT NULL, IsAdmin BOOLEAN NOT NULL DEFAULT false);
 
-      CREATE TABLE IF NOT EXISTS cars ( Id VARCHAR(255) PRIMARY KEY, Owner VARCHAR(255) REFERENCES users(id) ON DELETE CASCADE, Create_on DATE NOT NULL, State VARCHAR(30) NOT NULL, Status VARCHAR(30) NOT NULL, Price FLOAT NOT NULL, Manufacturer VARCHAR(30) NOT NULL, Model VARCHAR(30) NOT NULL, Body_type VARCHAR(30) NOT NULL );
+      CREATE TABLE IF NOT EXISTS cars ( Id VARCHAR(255) PRIMARY KEY, Owner VARCHAR(255) REFERENCES users(id) ON DELETE CASCADE, Create_on TIMESTAMP NOT NULL DEFAULT NOW(), State VARCHAR(30) NOT NULL, Status VARCHAR(30) NOT NULL, Price FLOAT NOT NULL, Manufacturer VARCHAR(30) NOT NULL, Model VARCHAR(30) NOT NULL, Body_type VARCHAR(30) NOT NULL );
 
       CREATE TABLE IF NOT EXISTS orders ( Id VARCHAR(255) PRIMARY KEY, Buyer VARCHAR(255) REFERENCES users(id) ON DELETE CASCADE, Car_id VARCHAR(255) REFERENCES cars(id) ON DELETE CASCADE, Amount INTEGER NOT NULL, Status VARCHAR(30) NOT NULL );
 
@@ -52,8 +52,7 @@ class Database{
         '${data.last_name}',
         '${data.email}',
         '${data.password}',
-        '${data.address}',
-        ${data.is_admin}
+        '${data.address}'
       ) returning *;
     `);
     
@@ -61,7 +60,25 @@ class Database{
 
     return result;
   }
-  
+
+  async addCar(data) {
+    const conn = this.dbConnection();
+    const result = await conn.query(`INSERT INTO cars(id,owner,state,status,price,manufacturer,model,body_type) VALUES(
+        '${data.id}',
+        '${data.owner}',
+        '${data.state}',
+        '${data.status}',
+        '${data.price}',
+        '${data.manufacturer}',
+        '${data.model}',
+        '${data.body_type}'
+      ) returning *;
+    `);
+    
+    await conn.end();
+
+    return result;
+  }
 }
 
 module.exports.Database = Database;
