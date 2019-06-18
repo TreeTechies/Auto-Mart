@@ -5,7 +5,6 @@ const { Database } = require('../helpers/db/auto_mart.db');
 const db = new Database();
 
 getAll = (req, res) => {
-     
     var min_price = req.query.min;
     var max_price = req.query.max;
     
@@ -41,7 +40,8 @@ getAll = (req, res) => {
                 'data' :  query_max
             });
         }
-    } else {
+    } 
+    else {
         const token = req.header('auth-token');
 
         if (token) {
