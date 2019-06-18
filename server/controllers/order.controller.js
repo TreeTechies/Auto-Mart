@@ -1,48 +1,28 @@
 const { carsData } = require('../models/car.model');
-const { Order, orders } = require('../models/order.model');
-const { usersData } = require('../models/user.model');
+const { Order } = require('../models/order.model');
+const { Database } = require('../helpers/db/auto_mart.db');
 
-makeOrder = (req, res) => {
+const db = new Database();
+
+makeOrder = async (req, res) => {
     var car_id = req.body.id;
     var user_email = req.user.email;
  
-    const car = carsData.find((c) => c.id === car_id);
+    const car = await db.selectById('cars', car_id);
 
-    if (!car) {
-        res.status(401).send({
-            'status': 401,
-            'message': `Car with id of ${car_id} not found`
-        });
-        return;
-    }
-
+    if (car.rowCount == 0) return res.status(401).send({ 'status': 401, 'message': `Car with id of ${car_id} not found` });
     //  Get user
-    const user = usersData.find(u => u.email == user_email);
+    const user = await db.selectBy('users', 'email', user_email);
+    if (user.rowCount === 0) return res.status(401).send({ 'status': 401, 'message': `Your are not signed in, try again later.` });
     
-    if (!user) {
-        res.status(401).send({
-            'status': 401,
-            'message': 'You don\'t have an account in our system, please create one.'
-        });
-        return;
-    }
-
     // Make order
-    var order = new Order(
-        user.id,
-        car_id,
-        car.price,
-        'pending',
-        car.price
-    );
+    var order = new Order( user.rows[0].id, car_id, car.rows[0].price, 'pending', car.rows[0].price );
 
-    orders.push(order);
+    const result = await db.addOrder(order);
 
-    res.status(200).send({
-        'status': 200,
-        'message': 'Purchase order was done sucessfuly.',
-        'data': orders[orders.length - 1]
-    });
+    if (result.rowCount > 0) return res.status(200).send({ 'status': 200, 'message': 'Purchase order was done sucessfuly.', 'data': result.rows[0] });
+
+    return res.status(401).send({ 'status': 401, 'message': 'Purchase order was not inserted.' });
 }
 
 updateOrder = (req, res) => {

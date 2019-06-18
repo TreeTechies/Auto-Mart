@@ -23,14 +23,19 @@ const postCarSchema = {
     body_type:      Joi.string().required()
 };
 
+const orderSchema = {
+    id: Joi.string().required()
+};
+
 const updateCarPriceSchema = {
     price: Joi.number().integer().required(),
 };
 
-// export the schemas
+// export the schemasc
 module.exports = {
     '/auth/signup': signupSchema,
     '/auth/signin': signinSchema,
     '/car': postCarSchema,
     '/car/:id/price': updateCarPriceSchema,
+    '/order': orderSchema,
 };
