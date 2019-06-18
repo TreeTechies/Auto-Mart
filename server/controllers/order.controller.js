@@ -77,7 +77,7 @@ updateOrder = (req, res) => {
             'old_price_offered' : old_offered_price,
             'new_price_offered' : parseFloat(price_offered)
         }
-    });
+    }); 
     return;
 }
 
