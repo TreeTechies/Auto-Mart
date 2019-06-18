@@ -5,7 +5,7 @@ const { Car, carsData } = require('../models/car.model');
 const { usersData } = require('../models/user.model');
 
 getAll = (req, res) => {
-    
+     
     var min_price = req.query.min;
     var max_price = req.query.max;
     
