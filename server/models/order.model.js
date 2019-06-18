@@ -11,7 +11,4 @@ class Order {
     }
 }
 
-let orders = [];
-
 module.exports.Order = Order;
-module.exports.orders = orders;
