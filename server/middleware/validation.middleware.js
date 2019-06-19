@@ -1,30 +1,36 @@
 //  Imports
-const Joi = require('@hapi/joi'); //  Import Joi for Validations
+const Joi = require('@hapi/joi');
 
-//  Register validation
-function registerValidation(data) {
-    const userSchema = {
-        email:      Joi.string().required().email(),
-        first_name: Joi.string().required(),
-        last_name:  Joi.string().required(),
-        password:   Joi.string().min(6).required(),
-        address:    Joi.string().required(),
-        is_admin:   Joi.boolean().required(),
-    };
-
-    return Joi.validate(data, userSchema);
+const signupSchema = {
+    email:      Joi.string().required().email(),
+    first_name: Joi.string().required(),
+    last_name:  Joi.string().required(),
+    password:   Joi.string().min(6).required(),
+    address:    Joi.string().required(),
+    is_admin:   Joi.boolean().required(),
 }
 
-//  Login validation
-function loginValidation(data) {
-    const schema = {
-        email:      Joi.string().required().email(),
-        password:   Joi.string().min(6).required()
-    };
+const signinSchema = {
+    email:      Joi.string().required().email(),
+    password:   Joi.string().min(6).required()
+};
 
-    return Joi.validate(data, schema);
-}
+const postCarSchema = {
+    state:          Joi.string().required(),
+    price:          Joi.number().integer().required(),
+    manufacturer:   Joi.string().required(),
+    model:          Joi.string().required(),
+    body_type:      Joi.string().required()
+};
 
+const updateCarPriceSchema = {
+    price: Joi.number().integer().required(),
+};
 
-module.exports.registerValidation = registerValidation;
-module.exports.loginValidation = loginValidation;
+// export the schemas
+module.exports = {
+    '/auth/signup': signupSchema,
+    '/auth/signin': signinSchema,
+    '/car': postCarSchema,
+    '/car/:id/price': updateCarPriceSchema,
+};
