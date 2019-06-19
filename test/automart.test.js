@@ -47,7 +47,8 @@ describe('Auto Mart', () => {
 
         it('it should signin.', async (done) => {
             chai.request(server).post('/api/v1/auth/signin').send(signin_data).end((err, res) => {
-                res.should.have.status(200);
+                //res.should.have.status(200);
+                expect(res.status).to.be.equal(200);
             });
             done();
         });
