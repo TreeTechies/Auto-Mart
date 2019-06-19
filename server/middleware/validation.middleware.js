@@ -6,8 +6,7 @@ const signupSchema = {
     first_name: Joi.string().required(),
     last_name:  Joi.string().required(),
     password:   Joi.string().min(6).required(),
-    address:    Joi.string().required(),
-    is_admin:   Joi.boolean().required(),
+    address:    Joi.string().required()
 }
 
 const signinSchema = {

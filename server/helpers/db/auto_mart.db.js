@@ -150,6 +150,13 @@ class Database{
     await conn.end();
     return result;
   }
+
+  async deleteIfExist(table, column, value){
+    const conn = this.dbConnection();
+    const result = await conn.query(`DELETE FROM ${table} WHERE ${column} = '${value}';`);
+    await conn.end();
+    return result;
+  }
   
 }
 
