@@ -9,7 +9,7 @@ makeOrder = async (req, res) => {
  
     const car = await db.selectById('cars', car_id);
 
-    if (car.rowCount == 0) return res.status(401).send({ 'status': 401, 'message': `Car with id of ${car_id} not found` });
+    if (car.rowCount == 0) return res.status(404).send({ 'status': 404, 'message': `Car with id of ${car_id} not found` });
     //  Get user
     const user = await db.selectBy('users', 'email', user_email);
     if (user.rowCount === 0) return res.status(401).send({ 'status': 401, 'message': `Your are not signed in, try again later.` });
@@ -19,9 +19,7 @@ makeOrder = async (req, res) => {
 
     const result = await db.addOrder(order);
 
-    if (result.rowCount > 0) return res.status(200).send({ 'status': 200, 'message': 'Purchase order was done sucessfuly.', 'data': result.rows[0] });
-
-    return res.status(401).send({ 'status': 401, 'message': 'Purchase order was not inserted.' });
+    return res.status(200).send({ 'status': 200, 'message': 'Purchase order was done sucessfuly.', 'data': result.rows[0] });
 }
 
 updateOrder = async (req, res) => {

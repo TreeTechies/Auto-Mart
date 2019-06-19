@@ -60,7 +60,7 @@ postCar = async (req, res)  => {
     var car = new Car( result.rows[0].id, req.body.state, req.body.price, req.body.manufacturer, req.body.model, req.body.body_type);
     try {
         const insertedUser = await db.addCar(car);
-        return res.status(200).send({ 'status': 200, 'message': 'Car post sucessfuly added', 'data': insertedUser.rows[0] });
+        return res.status(201).send({ 'status': 201, 'message': 'Car post sucessfuly added', 'data': insertedUser.rows[0] });
     } catch (error) {
         return res.status(401).send({ 'status': 401, 'message': 'Car is not saved' });
     }

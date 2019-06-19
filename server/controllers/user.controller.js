@@ -10,9 +10,9 @@ signIn = async (req, res) => {
     const result = await db.selectBy('users', 'email', req.body.email);
     if (result.rowCount > 0) {
         const validPassword = await bcrypt.compare(req.body.password, result.rows[0].password);
-        if (!validPassword) return res.send('Password is not correct.');
+        if (!validPassword) return res.status(400).send('Password is not correct.');
         const token = jwt.sign({email: req.body.email}, 'secret_key');
-        return res.header('authtoken', token).send({ 'status': 200, 'message': 'User sign in is sucessfuly!', 'user_token': token, 'data': result.rows[0] });
+        return res.header('authtoken', token).status(200).send({ 'status': 200, 'message': 'User sign in is sucessfuly!', 'user_token': token, 'data': result.rows[0] });
     }
     
     return res.status(401).send(`Email with this ${req.body.email} doesn't exist!`);
@@ -27,19 +27,12 @@ signUp = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
         const user = new User( req.body.email, req.body.first_name, req.body.last_name, hashedPassword, req.body.address, req.body.is_admin );
-        let result;
-        try {
-            result = await db.addUser(user);
-            res.send({ 'status': 200, 'message': 'User registered sucessfuly!', 'data': result.rows[0] });
-        } catch (error) {
-            res.status(404).send({ 'status': 404, 'message': error.error }); return;
-        }
+        let result = await db.addUser(user);
+        return res.status(201).send({ 'status': 201, 'message': 'User registered sucessfuly!', 'data': result.rows[0] });
     }
     else{
-        res.status(404).send({ 'status': 404, 'message': `User with this email exist.` }); return;
+        return res.status(409).send({ 'status': 409, 'message': `User with this email exist.` });
     }
-
-    return;
 };
 
 module.exports.signIn = signIn;
