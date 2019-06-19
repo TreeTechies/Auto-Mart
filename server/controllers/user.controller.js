@@ -12,11 +12,10 @@ signIn = async (req, res) => {
         const validPassword = await bcrypt.compare(req.body.password, result.rows[0].password);
         if (!validPassword) return res.send('Password is not correct.');
         const token = jwt.sign({email: req.body.email}, 'secret_key');
-        res.header('authtoken', token).send({ 'status': 200, 'message': 'User sign in is sucessfuly!', 'user_token': token, 'data': result.rows[0] });
+        return res.header('authtoken', token).send({ 'status': 200, 'message': 'User sign in is sucessfuly!', 'user_token': token, 'data': result.rows[0] });
     }
-    else{
-        return res.status(401).send(`Email with this ${req.body.email} doesn't exist!`);
-    }
+    
+    return res.status(401).send(`Email with this ${req.body.email} doesn't exist!`);
 };
  
 signUp = async (req, res) => {

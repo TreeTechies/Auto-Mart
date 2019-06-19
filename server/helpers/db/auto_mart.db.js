@@ -64,7 +64,7 @@ class Database{
 
       CREATE TABLE IF NOT EXISTS cars ( Id VARCHAR(255) PRIMARY KEY, Owner VARCHAR(255) REFERENCES users(id) ON DELETE CASCADE, Create_on TIMESTAMP NOT NULL DEFAULT NOW(), State VARCHAR(30) NOT NULL, Status VARCHAR(30) NOT NULL, Price FLOAT NOT NULL, Manufacturer VARCHAR(30) NOT NULL, Model VARCHAR(30) NOT NULL, Body_type VARCHAR(30) NOT NULL );
 
-      CREATE TABLE IF NOT EXISTS orders ( Id VARCHAR(255) PRIMARY KEY, Buyer VARCHAR(255) REFERENCES users(id) ON DELETE CASCADE, Car_id VARCHAR(255) REFERENCES cars(id) ON DELETE CASCADE, Amount INTEGER NOT NULL, Status VARCHAR(30) NOT NULL );
+      CREATE TABLE IF NOT EXISTS orders ( Id VARCHAR(255) PRIMARY KEY, Buyer VARCHAR(255) REFERENCES users(id) ON DELETE CASCADE, Car_id VARCHAR(255) REFERENCES cars(id) ON DELETE CASCADE, Amount INTEGER NOT NULL, Status VARCHAR(30) NOT NULL, priceOffered INTEGER NOT NULL );
 
       CREATE TABLE IF NOT EXISTS flags ( Id VARCHAR(255) PRIMARY KEY, Car_id VARCHAR(255) REFERENCES cars(id) ON DELETE CASCADE, Create_on DATE NOT NULL, Description VARCHAR(30) NOT NULL );
     `);
@@ -108,9 +108,31 @@ class Database{
     return result;
   }
 
+  async addOrder(data) {
+    const conn = this.dbConnection();
+    const result = await conn.query(`INSERT INTO orders VALUES(
+        '${data.id}',
+        '${data.buyer}',
+        '${data.car_id}',
+        '${data.amount}',
+        '${data.status}',
+        '${data.price_offered}'
+      ) returning *;
+    `);
+    await conn.end();
+    return result;
+  }
+
   async updateCarPrice(data){
     const conn = this.dbConnection();
     const result = await conn.query(`UPDATE cars SET price = '${data.price}' WHERE id = '${data.id}' AND owner = '${data.owner}' returning *;`);
+    await conn.end();
+    return result;
+  }
+
+  async updateOrderPrice(data){
+    const conn = this.dbConnection();
+    const result = await conn.query(`UPDATE orders SET priceOffered = ${data.price} WHERE id = '${data.id}' AND buyer = '${data.buyer}' returning *;`);
     await conn.end();
     return result;
   }
@@ -121,6 +143,21 @@ class Database{
     await conn.end();
     return result;
   }
+
+  async deleteCar(id){
+    const conn = this.dbConnection();
+    const result = await conn.query(`DELETE FROM cars WHERE id = '${id}';`);
+    await conn.end();
+    return result;
+  }
+
+  async deleteIfExist(table, column, value){
+    const conn = this.dbConnection();
+    const result = await conn.query(`DELETE FROM ${table} WHERE ${column} = '${value}';`);
+    await conn.end();
+    return result;
+  }
+  
 }
 
 module.exports.Database = Database;

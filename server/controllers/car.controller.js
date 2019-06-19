@@ -109,27 +109,20 @@ markCarAsSold = async (req, res) => {
     }
 };
 
-deleteCar = (req, res) => {
-    var user_email = req.user.email;    
-    //  Get user role
-    const is_admin = usersData.find(u => u.email == user_email).is_admin;
-
-    if (!is_admin) {
-        res.status(401).send({
-            'status': 401,
-            'message': 'Unauthorized request'
-        });
-        return;
+deleteCar = async (req, res) => {  
+    //  Get user role 
+    const user = await db.selectBy('users', 'email', req.user.email);
+    if (user.rowCount == 0 || !user.rows[0].isadmin) {
+        return res.status(401).send({ 'status': 401, 'message': 'Unauthorized request' });
     }
 
     var id = req.params.id;
-    const deletedItems = carsData.splice(carsData.findIndex((c) => c.id === id), 1);
-    res.status(200).send({
+    await db.deleteCar(id);
+
+    return res.status(200).send({
         'status': 200,
-        'message': 'Car Ad successfully deleted',
-        'data': deletedItems
+        'message': 'Car Ad successfully deleted'
     });
-    return;
 };
 
 module.exports.getAll = getAll;

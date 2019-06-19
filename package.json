@@ -6,7 +6,7 @@
   "scripts": {
     "prod": "node server/index.js",
     "start": "nodemon server/index.js",
-    "test": "nyc mocha 'server/tests/' --exit",
+    "test": "nyc mocha './test/' --exit",
     "coverage": "nyc --reporter=lcov npm run test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },

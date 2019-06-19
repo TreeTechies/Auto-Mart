@@ -1,84 +1,45 @@
-const { carsData } = require('../models/car.model');
-const { Order, orders } = require('../models/order.model');
-const { usersData } = require('../models/user.model');
+const { Order } = require('../models/order.model');
+const { Database } = require('../helpers/db/auto_mart.db');
 
-makeOrder = (req, res) => {
+const db = new Database();
+
+makeOrder = async (req, res) => {
     var car_id = req.body.id;
     var user_email = req.user.email;
+ 
+    const car = await db.selectById('cars', car_id);
 
-    const car = carsData.find((c) => c.id === car_id);
-
-    if (!car) {
-        res.status(401).send({
-            'status': 401,
-            'message': `Car with id of ${car_id} not found`
-        });
-        return;
-    }
-
+    if (car.rowCount == 0) return res.status(401).send({ 'status': 401, 'message': `Car with id of ${car_id} not found` });
     //  Get user
-    const user = usersData.find(u => u.email == user_email);
+    const user = await db.selectBy('users', 'email', user_email);
+    if (user.rowCount === 0) return res.status(401).send({ 'status': 401, 'message': `Your are not signed in, try again later.` });
     
-    if (!user) {
-        res.status(401).send({
-            'status': 401,
-            'message': 'You don\'t have an account in our system, please create one.'
-        });
-        return;
-    }
-
     // Make order
-    var order = new Order(
-        user.id,
-        car_id,
-        car.price,
-        'pending',
-        car.price
-    );
+    var order = new Order( user.rows[0].id, car_id, car.rows[0].price, 'pending', car.rows[0].price );
 
-    orders.push(order);
+    const result = await db.addOrder(order);
 
-    res.status(200).send({
-        'status': 200,
-        'message': 'Purchase order was done sucessfuly.',
-        'data': orders[orders.length - 1]
-    });
+    if (result.rowCount > 0) return res.status(200).send({ 'status': 200, 'message': 'Purchase order was done sucessfuly.', 'data': result.rows[0] });
+
+    return res.status(401).send({ 'status': 401, 'message': 'Purchase order was not inserted.' });
 }
 
-updateOrder = (req, res) => {
-    var price_offered = req.body.price_offered;
+updateOrder = async (req, res) => {
+    var price_offered = req.body.price;
     var order_id = req.params.id;
-    var user_email = req.user.email;
+    //  Get user 
+    const user = await db.selectBy('users', 'email', req.user.email);
 
-    //  Get user
-    const user = usersData.find(u => u.email == user_email);
-
-    const order_index = orders.findIndex((o) => o.id === order_id);
-
-    if(orders[order_index].buyer != user.id){
-        res.status(401).send({
-            'status': 401,
-            'message': 'The purchase order your are trying to update is not yours.'
-        });
-        return;
-    }
-
-    const old_offered_price = orders[order_index].price_offered;
+    if (user.rowCount === 0) return res.status(401).send({ 'status': 401, 'message': 'It looks like your not signed in, please try again.'});
     
-    // Update order
-    orders[order_index].price_offered = price_offered;
-
-    res.status(200).send({
-        'status': 200,
-        'data': {
-            'id' : orders[order_index].id,
-            'car_id' : orders[order_index].car_id,
-            'status' : orders[order_index].status,
-            'old_price_offered' : old_offered_price,
-            'new_price_offered' : parseFloat(price_offered)
-        }
-    });
-    return;
+    const result = await db.updateOrderPrice({'price': price_offered, 'id': order_id, 'buyer': user.rows[0].id});
+    
+    if (result.rowCount > 0) {
+        return res.status(200).send({ 'status': 200, 'message': 'Car price was updated sucessfuly.', 'data': result.rows[0] });
+    }
+    else{
+        return res.status(401).send({ 'status': 401, 'message': 'Update failed, you don\'t own this order.'});
+    }
 }
 
 module.exports.makeOrder = makeOrder;
