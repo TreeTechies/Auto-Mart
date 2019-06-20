@@ -2,36 +2,36 @@
 const Joi = require('@hapi/joi');
 
 const signupSchema = {
-    email:      Joi.string().required().email(),
-    first_name: Joi.string().required(),
-    last_name:  Joi.string().required(),
-    password:   Joi.string().min(6).required(),
-    address:    Joi.string().required()
+    email:      Joi.string().strict().trim().min(3).required().email(),
+    first_name: Joi.string().strict().trim().min(3).required(),
+    last_name:  Joi.string().strict().trim().min(3).required(),
+    password:   Joi.string().strict().trim().min(6).required(),
+    address:    Joi.string().strict().trim().min(3).required()
 }
 
 const signinSchema = {
-    email:      Joi.string().required().email(),
-    password:   Joi.string().min(6).required()
+    email:      Joi.string().strict().trim().min(3).required().email(),
+    password:   Joi.string().strict().trim().min(6).required()
 };
 
 const postCarSchema = {
-    state:          Joi.string().required(),
-    price:          Joi.number().integer().required(),
-    manufacturer:   Joi.string().required(),
-    model:          Joi.string().required(),
-    body_type:      Joi.string().required()
+    state:          Joi.string().strict().trim().min(3).required(),
+    price:          Joi.number().integer().min(1).required(),
+    manufacturer:   Joi.string().strict().trim().min(3).required(),
+    model:          Joi.string().strict().trim().min(3).required(),
+    body_type:      Joi.string().strict().trim().min(1).required()
 };
 
 const orderSchema = {
-    id: Joi.string().required()
+    id: Joi.number().min(1).required()
 };
 
 const updateCarPriceSchema = {
-    price: Joi.number().integer().required(),
+    price: Joi.number().integer().min(1).required(),
 };
 
 const updateOrderPriceSchema = {
-    price: Joi.number().integer().required(),
+    price: Joi.number().integer().min(1).required(),
 };
 
 // export the schemasc
