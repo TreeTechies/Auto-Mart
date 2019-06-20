@@ -26,6 +26,12 @@ const orderSchema = {
     id: Joi.number().min(1).required()
 };
 
+const flagSchema = {
+    car_id: Joi.number().required(),
+    reason: Joi.string().required(),
+    description: Joi.string().required()
+};
+
 const updateCarPriceSchema = {
     price: Joi.number().integer().min(1).required(),
 };
@@ -42,4 +48,5 @@ module.exports = {
     '/car/:id/price': updateCarPriceSchema,
     '/order': orderSchema,
     '/order/:id': updateOrderPriceSchema,
+    '/flag': flagSchema,
 };
