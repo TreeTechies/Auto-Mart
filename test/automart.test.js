@@ -98,7 +98,7 @@ describe('Auto Mart', () => {
         it('it should post a new car', (done) => {
             var new_car = {
                 'state': 'new',
-                'price': 45500,
+                'price': 45600,
                 'manufacturer': 'Tesla',
                 'model': 'Roadstar',
                 'body_type': 'B'
