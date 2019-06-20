@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 describe('Auto Mart', () => {
 
     let token;
-    let user;
+    let token_admin;
     let car;
 
     const email = faker.internet.email();
@@ -21,13 +21,18 @@ describe('Auto Mart', () => {
         email: `${email}`,
         first_name: 'Nsengimana',
         last_name: 'Dominique',
-        password: 'Veda123.',
+        password: 'Do123456',
         address: 'Gikondo'
     };
 
     const signin_data = {
-        'email': `vedadom@gmail.com`,
+        'email': `${email}`,
         'password': 'Do123456'
+    }
+
+    const signin_data_admin = {
+        'email': `admin@automart.com`,
+        'password': '123456789'
     }
 
     const signin_data_invalid = {
@@ -58,7 +63,16 @@ describe('Auto Mart', () => {
                 done();
             });
         });
-    
+
+        it('it should signin as admin.', (done) => {
+            chai.request(server).post('/api/v1/auth/signin').send(signin_data_admin).end((err, res) => {
+                expect(res.status).to.be.eq(200);
+                admin = res.body.data;
+                token_admin = res.body.user_token;
+                done();
+            });
+        });
+
         it('it should return 400 if password is invalid.', (done) => {
             chai.request(server).post('/api/v1/auth/signin').send(signin_data_invalid).end((err, res) => {
                 expect(res.status).to.be.eq(400);
@@ -117,7 +131,7 @@ describe('Auto Mart', () => {
 
         it('return 404 if car id a given id is not found', () => {
             chai.request(server).post('/api/v1/order').set('content-type', 'application/json')
-            .set('auth-token', token).send({'id': '8748uruhjfdayu38e3883'}).end((err, res) => {
+            .set('auth-token', token).send({'id': 2222}).end((err, res) => {
                 expect(res.status).to.be.equal(404);
             })
         });
@@ -155,13 +169,24 @@ describe('Auto Mart', () => {
         });
     });
 
-
+    describe('FLAG', () => {
+        it('it should flag a car', () => {
+            chai.request(server).post('/api/v1/flag').set('content-type', 'application/json')
+            .set('auth-token', token).send({
+                'car_id': car.id,
+                'reason': 'test reason',
+                'description': 'this is a test reason description',
+            }).end((err, res) => {
+                expect(res.status).to.be.equal(201);
+            });
+        });
+    })
 
     describe('Admin', () => {
 
         it('it should return all cars when user is admin', () => {
             chai.request(server).get('/api/v1/car').set('content-type', 'application/json')
-            .set('auth-token', token).end((err, res) => {
+            .set('auth-token', token_admin).end((err, res) => {
                 expect(res.status).to.be.equal(200);
                 expect(res.body.message).to.be.equal('All cars sold and unsold');
                 expect(res.body.data[0].body_type).to.be.equal('B');
@@ -170,7 +195,7 @@ describe('Auto Mart', () => {
 
         it('it should return 200 if admin delete', () => {
             chai.request(server).delete(`/api/v1/car/${car.id}`).set('content-type', 'application/json')
-            .set('auth-token', token).end((err, res) => {
+            .set('auth-token', token_admin).end((err, res) => {
                 expect(res.status).to.be.equal(200);
                 expect(res.body.message).to.be.equal('Car Ad successfully deleted');
             })

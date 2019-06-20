@@ -5,24 +5,13 @@ const db = new Database();
 
 /* Post a flag */
 postFlag = async (req, res) => {
-    const result = await db.addFlag({
-        'car_id': req.body.car_id,
-        'reason': req.body.reason,
-        'description': req.body.description,
-    });
 
-    if(result.rowCount > 0){
-        return res.status(201).send({
-            'status': 201,
-            'data': result.rows[0] 
-        });
-    }
-    else{
-        return res.status(404).send({
-            'status': 404,
-            'message': 'Failed to add flag'
-        });
-    }
+    const result = await db.addFlag(new Flag(req.body.car_id, req.body.reason, req.body.description));
+
+    return res.status(201).send({
+        'status': 201,
+        'data': result.rows[0] 
+    });
 }
 
 module.exports.postFlag = postFlag;

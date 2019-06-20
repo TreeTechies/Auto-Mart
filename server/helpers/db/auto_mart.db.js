@@ -1,6 +1,8 @@
 const { Pool } = require('pg');
 const { User } = require('../../models/user.model');
 
+const bcrypt = require('bcryptjs');
+
 class Database{
   
   dbConnection() {
@@ -70,10 +72,12 @@ class Database{
       CREATE TABLE IF NOT EXISTS flags ( Id SERIAL, Car_id INTEGER REFERENCES cars(id) ON DELETE CASCADE, reason VARCHAR(225), Create_on TIMESTAMP NOT NULL DEFAULT NOW(), Description VARCHAR(225) NOT NULL, PRIMARY KEY (id));
     `);
 
-    const result = await this.selectBy('users', 'email', 'admin@autmart.com');
+    const result = await this.selectBy('users', 'email', 'admin@automart.com');
 
     if (result.rowCount == 0) {
-      this.addUser(new User('admin@autmart.com', 'Admin', 'Admin', 'admin1.', 'Kigali', true));
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash('123456789', salt);
+      this.addUserAdmin(new User('admin@automart.com', 'Admin', 'Admin', `${hashedPassword}`, 'Kigali', true));
     }
     
     await conn.end();
@@ -88,6 +92,23 @@ class Database{
         '${data.email}',
         '${data.password}',
         '${data.address}'
+      ) returning *;
+    `);
+    
+    await conn.end();
+
+    return result;
+  }
+
+  async addUserAdmin(data) {
+    const conn = this.dbConnection();
+    const result = await conn.query(`INSERT INTO users(firstname,lastname,email,password,address,isadmin) VALUES(
+        '${data.first_name}',
+        '${data.last_name}',
+        '${data.email}',
+        '${data.password}',
+        '${data.address}',
+        '${data.is_admin}'
       ) returning *;
     `);
     
