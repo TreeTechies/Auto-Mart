@@ -1,3 +1,11 @@
+services:
+  - postgresql
+addons:
+  postgresql: "9.6"
+env:
+  global:
+    - URL=http://localhost:3030
+    - PORT=3030
 language: node_js
 node_js:
   - node
@@ -8,5 +16,8 @@ cache:
     - "node_modules"
 script:
   - npm run test
+before_script:
+  - psql -c 'create database auto_mart;' -U postgres
+  - npm run db
 after_success:
-  - npm run coveralls
+  - npm run coverage
