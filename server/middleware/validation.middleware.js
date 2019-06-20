@@ -27,9 +27,9 @@ const orderSchema = {
 };
 
 const flagSchema = {
-    car_id: Joi.number().required(),
-    reason: Joi.string().required(),
-    description: Joi.string().required()
+    car_id: Joi.number().min(1).required(),
+    reason: Joi.string().strict().trim().min(1).required(),
+    description: Joi.string().strict().trim().min(1).required()
 };
 
 const updateCarPriceSchema = {
