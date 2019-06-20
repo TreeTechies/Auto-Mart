@@ -13,7 +13,7 @@ module.exports = function(req, res, next) {
         req.user = {
             'token': verified,
             'email': verified.email
-        }; // Store user token and role for leter use
+        }; // Store user token and role for leter uses
         
         next(); // Let continue
     } catch (error) {
