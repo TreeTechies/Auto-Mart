@@ -4,9 +4,15 @@ const server = require('../server/index');
 const should = chai.should;
 const expect = chai.expect;
 const faker = require('faker');
+const { Database } = require('../server/helpers/db/auto_mart.db');
 
 
 chai.use(chaiHttp);
+
+before(() =>{
+    const db = new Database();
+    db.createDb();
+});
 
 
 describe('Auto Mart', () => {

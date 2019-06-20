@@ -18,6 +18,5 @@ script:
   - npm run test
 before_script:
   - psql -c 'create database auto_mart;' -U postgres
-  - npm run db
 after_success:
   - npm run coverage
