@@ -14,7 +14,6 @@ postFlag = async (req, res) => {
     if(result.rowCount > 0){
         return res.status(201).send({
             'status': 201,
-            'message': 'User registered sucessfuly!',
             'data': result.rows[0] 
         });
     }

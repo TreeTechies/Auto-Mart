@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const { User } = require('../../models/user.model');
 
 class Database{
   
@@ -68,6 +69,13 @@ class Database{
 
       CREATE TABLE IF NOT EXISTS flags ( Id SERIAL, Car_id INTEGER REFERENCES cars(id) ON DELETE CASCADE, reason VARCHAR(225), Create_on TIMESTAMP NOT NULL DEFAULT NOW(), Description VARCHAR(225) NOT NULL, PRIMARY KEY (id));
     `);
+
+    const result = await this.selectBy('users', 'email', 'admin@autmart.com');
+
+    if (result.rowCount == 0) {
+      this.addUser(new User('admin@autmart.com', 'Admin', 'Admin', 'admin1.', 'Kigali', true));
+    }
+    
     await conn.end();
     return;
   }

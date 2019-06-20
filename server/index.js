@@ -5,12 +5,9 @@ const user_route = require('./routes/user.route');
 const car_route = require('./routes/car.route');
 const order_route = require('./routes/order.route');
 const flag_route = require('./routes/flag.route');
-const swagger = require('../swagger');
 const { Database } = require('./helpers/db/auto_mart.db');
 
 const app = express();
-
-swagger(app);
 
 const PORT = process.env.PORT || 3000;
 
