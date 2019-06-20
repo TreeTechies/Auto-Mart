@@ -1,5 +1,8 @@
 const { Pool } = require('pg');
 const { User } = require('../../models/user.model');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const bcrypt = require('bcryptjs');
 
@@ -7,7 +10,7 @@ class Database{
   
   dbConnection() {
     return new Pool({
-      connectionString: 'postgresql://postgres:Veda1.@127.0.0.1:5432/auto_mart',
+      connectionString: process.env.DATABASE_URL,
     });
   }
 

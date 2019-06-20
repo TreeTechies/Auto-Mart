@@ -6,6 +6,7 @@ env:
   global:
     - URL=http://localhost:3030
     - PORT=3030
+    - DATABASE_URL=postgresql://postgres@127.0.0.1:5432/auto_mart
 language: node_js
 node_js:
   - node
