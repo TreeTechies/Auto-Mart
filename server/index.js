@@ -1,5 +1,7 @@
 //  Import Modules
 const express = require('express');
+var cors = require('cors');
+
 //  Import Routes
 const user_route = require('./routes/user.route');
 const car_route = require('./routes/car.route');
@@ -8,9 +10,9 @@ const flag_route = require('./routes/flag.route');
 const { Database } = require('./helpers/db/auto_mart.db');
 
 const app = express();
+app.use(cors());
 
-const PORT = process.env.PORT || 3000;
-
+const PORT = process.env.PORT || 3000
 
 //  Middlewares
 app.use(express.json()); //  Json Middleware
