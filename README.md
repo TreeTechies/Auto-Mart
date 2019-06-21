@@ -71,8 +71,9 @@ Auto Mart is an online marketplace for automobiles of diverse makes, model or bo
 `- GET /car/ - Admin can view all posted ads whether sold or unsold. `
 
 ## **Pivotal Tracker Stories**
-## **ApI**
+[App stories](https://pivotaltracker.com/n/projects/2346314)
 
+## **ApI**
 [API Docs](https://automartonline.docs.apiary.io)
 
 ## **UI**
