@@ -73,7 +73,7 @@ Auto Mart is an online marketplace for automobiles of diverse makes, model or bo
 ## **Pivotal Tracker Stories**
 ## **ApI**
 
-[API Docs](https://auto-mart-online-app.herokuapp.com/)
+[API Docs](https://automartonline.docs.apiary.io)
 
 ## **UI**
 [Github Pages](https://treetechies.github.io/Auto-Mart/)
